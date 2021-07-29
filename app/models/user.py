@@ -2,7 +2,7 @@ from app import db
 
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.VARCHAR(20), unique=True)
+    username = db.Column(db.VARCHAR, unique=True)
     user_full_name = db.Column(db.String)
     user_address = db.Column(db.String)
     user_phone = db.Column(db.String)

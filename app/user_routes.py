@@ -3,7 +3,7 @@ from app import db
 # from app.models.board import Board
 from .models.user import User
 
-user_bp = Blueprint("/users", __name__, url_prefix="/")
+user_bp = Blueprint("/users", __name__, url_prefix="/users")
 
 #create a new user
 @user_bp.route("", methods=["POST"], strict_slashes=False)
@@ -12,9 +12,14 @@ def create_a_user():
     if ("Username" not in request_body or "Full name" not in request_body or "Phone number" not in request_body or "Address" not in request_body):
         return jsonify({"details": "Failed to create a user profile"}), 400
     
-    new_user = User(username= request_body["Username"], fullname = request_body["Full name"], address= request_body["Address"], phonenum= request_body["Phone number"])
+    new_user = User(username= request_body["Username"],
+                    user_full_name = request_body["Full name"], 
+                    user_address=request_body["Address"], 
+                    user_phone=request_body["Phone number"])
+    
     db.session.add(new_user)
     db.session.commit()
+    
     return jsonify({"Success": f"User {new_user.username} is created"}), 201
 
 #get a user profile

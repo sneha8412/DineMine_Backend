@@ -5,7 +5,7 @@ class Host(db.Model):
     host_full_name = db.Column(db.String)
     host_address = db.Column(db.String)
     host_phone = db.Column(db.String)
-    host_introduction = db.Column(db.String(200))
+    host_introduction = db.Column(db.String)
     host_rating = db.Column(db.Integer)
     # host_profile_pic = db.Column()
     
@@ -16,6 +16,16 @@ class Host(db.Model):
     def get_host_info(self):
         
         return{
+            "Host name": self.host_full_name,
+            "Address" : self.host_address,
+            "Phone number" : self.host_phone,
+            "Introduction" :self.host_introduction,     
+        }
+        
+    def get_host_info_id(self):
+        
+        return{
+            "Host ID" : self.host_id,
             "Host name": self.host_full_name,
             "Address" : self.host_address,
             "Phone number" : self.host_phone,
