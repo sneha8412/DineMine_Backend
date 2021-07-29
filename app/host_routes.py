@@ -1,3 +1,4 @@
+
 #---------------------------WAVE 2---------------------------------------------
 from flask import Blueprint, json, request, jsonify, make_response, Response
 from app import db
