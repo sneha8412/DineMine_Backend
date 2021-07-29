@@ -5,7 +5,7 @@ from .models.user import User
 from .models.order import Order
 from .models.experience import Experience
 
-order_bp = Blueprint("/", __name__, url_prefix="/")
+order_bp = Blueprint("/orders", __name__, url_prefix="/")
 
 #create a new order
 @order_bp.route("<experience_id>", methods=["POST"], strict_slashes=False)

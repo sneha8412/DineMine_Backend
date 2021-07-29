@@ -5,7 +5,7 @@ class Experience(db.Model):
     exp_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     exp_title = db.Column(db.String(50))
     #cuisine list
-    exp_price = db.Column(db.Decimal(6,2))
+    exp_price = db.Column(db.Float)
     exp_description = db.Column(db.String(500))
     #dine time
     #pictures

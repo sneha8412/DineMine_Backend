@@ -4,8 +4,8 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.VARCHAR(20), unique=True)
     user_full_name = db.Column(db.String)
-    user_address = db.Column(db.string)
-    user_phone = db.Column(db.string)
+    user_address = db.Column(db.String)
+    user_phone = db.Column(db.String)
     # user_profile_pic = db.Column()
     
     #create one to many relationship user and order

@@ -10,7 +10,7 @@ migrate = Migrate()
 load_dotenv()
 
 # @app.route('/',methods=['GET', 'POST'])
-@cross_origin() #allow all origins all methods.
+#@cross_origin() #allow all origins all methods.
 def create_app():
     app = Flask(__name__)
     #change to mysql
@@ -39,7 +39,7 @@ def create_app():
     app.register_blueprint(order_bp)
     app.register_blueprint(experience_bp)
     
-    CORS(app)
+    #CORS(app)
     return app
 
 #if __name__ == '__main__':

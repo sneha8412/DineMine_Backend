@@ -3,7 +3,7 @@ from app import db
 # from app.models.board import Board
 from .models.host import Host
 
-host_bp = Blueprint("/", __name__, url_prefix="/")
+host_bp = Blueprint("/hosts", __name__, url_prefix="/")
 
 #create a new host
 @host_bp.route("", methods=["POST"], strict_slashes=False)
@@ -29,7 +29,8 @@ def get_a_host_profile(host_id):
 #get all the hosts in that location
 @host_bp.route("", methods=["GET"])
 def get_all_hosts_profiles():
-    pass
+    return jsonify({}), 200
+    #pass
     #filter by location date cuisine
     #sort by price and rating
     

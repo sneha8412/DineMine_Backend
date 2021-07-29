@@ -5,7 +5,7 @@ from .models.host import Host
 from .models.order import Order
 from .models.experience import Experience
 
-experience_bp = Blueprint("/", __name__, url_prefix="/")
+experience_bp = Blueprint("/experiences", __name__, url_prefix="/")
 
 #create a new experience
 @experience_bp.route("<experience_id>", methods=["POST"], strict_slashes=False)
@@ -19,7 +19,7 @@ def get_an_experience_detail(experience_id):
     if experience == None:
         return jsonify({"Error": "Experience not found"}, 404)
     else:
-        return make_response(experience.get_order_details(), 200)
+        return make_response(experience.get_exp(), 200)
 
 
 #get all experience for one host

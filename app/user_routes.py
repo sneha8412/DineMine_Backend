@@ -3,7 +3,7 @@ from app import db
 # from app.models.board import Board
 from .models.user import User
 
-user_bp = Blueprint("/", __name__, url_prefix="/")
+user_bp = Blueprint("/users", __name__, url_prefix="/")
 
 #create a new user
 @user_bp.route("", methods=["POST"], strict_slashes=False)

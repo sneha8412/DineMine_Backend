@@ -3,10 +3,10 @@ from app import db
 class Host(db.Model):
     host_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     host_full_name = db.Column(db.String)
-    host_address = db.Column(db.string)
-    host_phone = db.Column(db.string)
-    host_introduction = db.Column(db.string(200))
-    host_rating = db.Column(db.integer(5))
+    host_address = db.Column(db.String)
+    host_phone = db.Column(db.String)
+    host_introduction = db.Column(db.String(200))
+    host_rating = db.Column(db.Integer)
     # host_profile_pic = db.Column()
     
     #create one to many relationship between host and experience
