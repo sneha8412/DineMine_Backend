@@ -6,14 +6,19 @@ class Order(db.Model):
     date_of_order = db.Column(db.DateTime, nullable = False)
     #order_status = db.column()
     
-    #create a relationship with experience and users
+    #create a relationship users (one user has many orders)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    
+    #create a relationship Experience (one experience has many orders)
+    exp_id = db.Column(db.Integer, db.ForeignKey('experience.exp_id'))
     
     
     def get_order_details(self):
         return {
             "Order ID" : self.order_id,
             "Date of order": self.date_of_order,
-            #user_info
+            "Experience ID" : self.exp_id,
+            "User ID" : self.user_id
             #total cost
         
         }

@@ -1,3 +1,4 @@
+#--------------------------WAVE 3 ------------------------------------
 from flask import Blueprint, json, request, jsonify, make_response
 from app import db
 # from app.models.board import Board
@@ -8,8 +9,8 @@ from .models.experience import Experience
 experience_bp = Blueprint("/experiences", __name__, url_prefix="/")
 
 #create a new experience
-@experience_bp.route("<experience_id>", methods=["POST"], strict_slashes=False)
-def create_an_order(experience_id):
+@experience_bp.route("<host_id>", methods=["POST"], strict_slashes=False)
+def create_an_order(host_id):
     pass
 
 #get an experience
@@ -22,11 +23,7 @@ def get_an_experience_detail(experience_id):
         return make_response(experience.get_exp(), 200)
 
 
-#get all experience for one host
-
-
-
-#get all experience in one location
+#get all experience based on one location
 
 
     

@@ -1,6 +1,7 @@
+#---------------------------WAVE 2---------------------------------------------
 from flask import Blueprint, json, request, jsonify, make_response, Response
 from app import db
-# from app.models.board import Board
+from app.models.experience import Experience
 from .models.host import Host
 
 host_bp = Blueprint("/hosts", __name__, url_prefix="/hosts")
@@ -21,6 +22,7 @@ def create_a_host():
     db.session.commit()
     return jsonify({"Success": f"Host {new_host.host_full_name} is created"}), 201
 
+
 #get a host profile
 @host_bp.route("/<host_id>", methods=["GET"])
 def get_a_host_profile(host_id):
@@ -29,6 +31,7 @@ def get_a_host_profile(host_id):
         return jsonify({"Error": "Host is not found"}, 404)
     else:
         return make_response(host.get_host_info_id(), 200)
+    
     
 #get all the hosts in that location #filter by location
 @host_bp.route("", methods=["GET"])
@@ -63,7 +66,6 @@ def update_a_host_profiles(host_id):
         
         db.session.commit()
         
-        
         return host.get_host_info(), 200
     
     return jsonify({"details": "Failed to update, please try again"}), 400
@@ -83,5 +85,20 @@ def delete_a_host_profile(host_id):
     
     return jsonify({"Success": "Host is deleted"}), 200
 
+#--------------------WAVE 3-------------------------------------------
+
+#get all experiences for the host
+@host_bp.route("/<host_id>/experiences", methods=["GET"])
+def get_all_experiences_for_host_profile(host_id):
+    host = Host.query.get(host_id)
+    if host== None:
+        return jsonify({"Error": "Host is not found"}, 404)
+    else:
+        return make_response(host.experiences, 200)
+
+#get one experience for the host
+
+
+#----------------STRETCH GOAL------------------------------------------
 #deactivate the host temporarily
 

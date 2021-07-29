@@ -1,27 +1,45 @@
+#----------------------WAVE 3 -------------------------------------------
+
 from app import db 
 from datetime import datetime
 
 class Experience(db.Model):
     exp_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     exp_title = db.Column(db.String(50))
-    #cuisine list
+    cuisine = db.Column(db.String(20))
     exp_price = db.Column(db.Float)
     exp_description = db.Column(db.String(500))
-    #dine time
+    dinetime = db.Column(db.String(15))
     #pictures
-    
     #order_status = db.column()
     
-    #create a relationship with host 
+    #create a relationship with host (one host can have many experiences)
+    host_id = db.Column(db.Integer, db.ForeignKey('host.host_id'))
+    
+    #create a relationship with order - one experience can have many orders
+    orders =  db.relationship('Order', backref='experience', lazy = True)
     
     
-    def get_exp(self):
+    def get_exp_info(self):
         return {
             "Experience ID" : self.exp_id,
+            "Host ID" : self.host_id,
             "Title" : self.exp_title,
             "Price" : self.exp_price,
-            "Description" : self.exp_description
-            #host id
-            #order id
+            "Description" : self.exp_description,
+            "Cuisine" :self.cuisine,
+            "Dine time" : self.dinetime 
             
+        }
+        
+    def get_exp_order_info(self):
+        return{
+            # "Orders":self.orders,
+            "Experience ID" : self.exp_id,
+            "Host ID" : self.host_id,
+            "Title" : self.exp_title,
+            "Price" : self.exp_price,
+            "Description" : self.exp_description,
+            "Cuisine" :self.cuisine,
+            "Dine time" : self.dinetime 
         }

@@ -1,3 +1,4 @@
+#-----------------------WAVE 2-----------------------------------------
 from app import db 
 
 class Host(db.Model):
@@ -9,7 +10,8 @@ class Host(db.Model):
     host_rating = db.Column(db.Integer)
     # host_profile_pic = db.Column()
     
-    #create one to many relationship between host and experience
+    #create one to many relationship between host and experience (one host can have many experiences posted)
+    experiences = db.relationship('Experience', backref='host', lazy = True)
     
     # user_profile_pic = db.Column()
     

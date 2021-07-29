@@ -1,6 +1,7 @@
+#----------------------WAVE 4 or STRETCH GOAL ----------------------------
+
 from flask import Blueprint, json, request, jsonify, make_response
 from app import db
-# from app.models.board import Board
 from .models.user import User
 from .models.order import Order
 from .models.experience import Experience
@@ -11,6 +12,7 @@ order_bp = Blueprint("/orders", __name__, url_prefix="/")
 @order_bp.route("<experience_id>", methods=["POST"], strict_slashes=False)
 def create_an_order(experience_id):
     pass
+
 
 #get an order detail
 @order_bp.route("<order_id>", methods=["GET"], strict_slashes=False)

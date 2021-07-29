@@ -1,3 +1,4 @@
+#------------------WAVE 1-------------------------------------------
 from app import db 
 
 class User(db.Model):
@@ -8,7 +9,8 @@ class User(db.Model):
     user_phone = db.Column(db.String)
     # user_profile_pic = db.Column()
     
-    #create one to many relationship user and order
+    #create one to many relationship user and order (one user has many orders)
+    orders = db.relationship('Order', backref='user', lazy = True)
     
     def get_user_info(self):
         
