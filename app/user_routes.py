@@ -30,6 +30,16 @@ def get_a_user_profile(user_id):
         return jsonify({"Error": "User is not found"}, 404)
     else:
         return make_response(user.get_user_info(), 200)
+
+#get all users
+@user_bp.route("", methods=["GET"])
+def get_all_users():
+    users = User.query.all()
+    
+    user_response = []
+    for user in users:
+        user_response.append(user.get_user_info())
+    return jsonify(user_response), 200
     
 #update a user profile
 

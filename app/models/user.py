@@ -2,7 +2,7 @@ from app import db
 
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.VARCHAR, unique=True)
+    username = db.Column(db.String, unique=True)
     user_full_name = db.Column(db.String)
     user_address = db.Column(db.String)
     user_phone = db.Column(db.String)
@@ -13,6 +13,7 @@ class User(db.Model):
     def get_user_info(self):
         
         return{
+            "User ID" : self.user_id,
             "Username": self.username,
             "Full name" : self.user_full_name,
             "Address" : self.user_address,
