@@ -1,4 +1,4 @@
-from flask import Blueprint, json, request, jsonify, make_response
+from flask import Blueprint, json, request, jsonify, make_response, Response
 from app import db
 # from app.models.board import Board
 from .models.host import Host
@@ -30,16 +30,43 @@ def get_a_host_profile(host_id):
     else:
         return make_response(host.get_host_info_id(), 200)
     
-#get all the hosts in that location
+#get all the hosts in that location #filter by location
 @host_bp.route("", methods=["GET"])
 def get_all_hosts_profiles():
-    return jsonify({}), 200
-    #pass
-    #filter by location date cuisine
-    #sort by price and rating
+    
+    hosts = Host.query.all()
+    
+    host_response = []
+    for host in hosts:
+        host_response.append(host.get_host_info_id())
+    return jsonify(host_response), 200
     
 
 #update a host profile
+@host_bp.route("<host_id>", methods=["PUT"])
+def update_a_host_profiles(host_id):
+    
+    host = Host.query.get(host_id)
+    
+    if host == None or not host:
+        return Response("Host not found", 404)
+    
+    form_data = request.get_json()
+    
+    if (form_data != None and "Host name" in form_data.keys() 
+        and "Introduction" in form_data and "Address" in form_data
+        and "Phone number" in form_data):
+        host.host_full_name = form_data["Host name"]
+        host.host_address = form_data["Address"]
+        host.host_phone = form_data["Phone number"]
+        host.host_introduction = form_data["Introduction"]
+        
+        db.session.commit()
+        
+        
+        return host.get_host_info(), 200
+    
+    return jsonify({"details": "Failed to update, please try again"}), 400
 
 
 #delete a host profile
