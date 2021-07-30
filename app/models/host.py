@@ -31,5 +31,7 @@ class Host(db.Model):
             "Host name": self.host_full_name,
             "Address" : self.host_address,
             "Phone number" : self.host_phone,
-            "Introduction" :self.host_introduction,     
+            "Introduction" :self.host_introduction, 
+            "Total Experiences" : len(self.experiences),
+            "Experiences" : self.experiences #list of experiences
         }

@@ -94,16 +94,19 @@ def delete_a_host_profile(host_id):
 
 #--------------------WAVE 3-------------------------------------------
 
-#get all experiences for the host
-@host_bp.route("/<host_id>/experiences", methods=["GET"])
-def get_all_experiences_for_host_profile(host_id):
-    host = Host.query.get(host_id)
-    if host== None:
-        return jsonify({"Error": "Host is not found"}, 404)
-    else:
-        return make_response(host.experiences, 200)
+# #get all experiences for the host
+# @host_bp.route("/<host_id>/experiences", methods=["GET"])
+# def get_all_experiences_for_host_profile(host_id):
+#     host = Host.query.get(host_id)
+#     if host== None:
+#         return jsonify({"Error": "Host is not found"}, 404)
+#     else:
+#         return make_response(host.experiences, 200)
 
 #get one experience for the host
+@host_bp.route("/<host_id>/experiences/<experience_id>", methods=["GET"])
+def get_all_experiences_for_host_profile(host_id, experience_id):
+    pass
 
 
 #----------------STRETCH GOAL------------------------------------------

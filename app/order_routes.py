@@ -1,7 +1,7 @@
 
 #----------------------WAVE 4 or STRETCH GOAL ----------------------------
 
-from flask import Blueprint, json, request, jsonify, make_response
+from flask import Blueprint, json, request, jsonify, make_response, Response
 from app import db
 from .models.user import User
 from .models.order import Order

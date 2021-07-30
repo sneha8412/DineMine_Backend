@@ -1,6 +1,6 @@
 #----------------------------WAVE 1 -----------------------------------------------
 
-from flask import Blueprint, json, request, jsonify, make_response
+from flask import Blueprint, json, request, jsonify, make_response, Response
 from app import db
 from .models.user import User
 
@@ -57,3 +57,32 @@ def delete_a_user_profile(user_id):
 #-----------------------STRETCH GOALS------------------------------------------
     
 #update a user profile empty for now
+@user_bp.route("/<user_id>", methods=["PUT"])
+def update_a_user_profile(user_id):   
+      
+    user  = User.query.get(user_id)
+    
+    if user == None or not user:
+        return Response("User not found", 404)
+    
+    form_data = request.get_json()
+    
+    if (form_data != None):
+        if ("Username" in form_data.keys()):
+            user.username = form_data["Username"]
+        
+        if ("Full name" in form_data.keys()):
+             user.user_full_name = form_data["Full name"]
+            
+        if ("Address" in form_data.keys()):
+             user.user_address = form_data["Address"]
+        
+        if ("Phone number" in form_data.keys()):
+            user.user_phone = form_data["Phone number"]
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        return user.get_user_info(), 200
+    
+    return jsonify({"details": "Failed to update user, please try again"}), 400
