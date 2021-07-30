@@ -57,14 +57,20 @@ def update_a_host_profiles(host_id):
     
     form_data = request.get_json()
     
-    if (form_data != None and "Host name" in form_data.keys() 
-        and "Introduction" in form_data and "Address" in form_data
-        and "Phone number" in form_data):
-        host.host_full_name = form_data["Host name"]
-        host.host_address = form_data["Address"]
-        host.host_phone = form_data["Phone number"]
-        host.host_introduction = form_data["Introduction"]
+    if (form_data != None):
+        if ("Host name" in form_data.keys()):
+            host.host_full_name = form_data["Host name"]
         
+        if ("Address" in form_data.keys()):
+            host.host_address = form_data["Address"]
+            
+        if ("Phone number" in form_data.keys()):
+            host.host_phone = form_data["Phone number"]
+        
+        if ("Introduction" in form_data.keys()):
+            host.host_introduction = form_data["Introduction"]
+        
+        db.session.add(host)
         db.session.commit()
         
         return host.get_host_info(), 200
