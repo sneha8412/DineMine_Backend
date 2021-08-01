@@ -6,7 +6,7 @@ from flask import Flask, request, Response
 from werkzeug.utils import secure_filename
 
 
-image_bp = Blueprint("/images", __name__, url_prefix="/")
+image_bp = Blueprint("/images", __name__, url_prefix="/images")
 
 @image_bp.route('upload', methods=['POST'])
 def upload():
@@ -26,7 +26,7 @@ def upload():
     return 'Img Uploaded!', 200
 
 
-@image_bp.route('<int:id>',methods=['GET'])
+@image_bp.route('<image_id>',methods=['GET'])
 def get_img(image_id):
     print(f"image id: {image_id}")
     img = Image.query.filter_by(id=image_id).first()
