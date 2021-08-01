@@ -7,7 +7,7 @@ class Host(db.Model):
     host_address = db.Column(db.String)
     host_phone = db.Column(db.String)
     host_introduction = db.Column(db.String)
-    host_rating = db.Column(db.Integer)
+    # host_rating = db.Column(db.Integer) (this should be inside the user)
     # host_profile_pic = db.Column()
     
     #create one to many relationship between host and experience (one host can have many experiences posted)

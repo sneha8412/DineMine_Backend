@@ -23,6 +23,7 @@ def create_app():
     from app.models.host import Host
     from app.models.order import Order
     from app.models.experience import Experience
+    from app.models.image import Image
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -32,12 +33,14 @@ def create_app():
     from .host_routes import host_bp
     from .order_routes import order_bp
     from .experience_routes import experience_bp
+    from .image_routes import image_bp
     
     #Register Blueprints here
     app.register_blueprint(user_bp)
     app.register_blueprint(host_bp)
     app.register_blueprint(order_bp)
     app.register_blueprint(experience_bp)
+    app.register_blueprint(image_bp)
     
     #CORS(app)
     return app
