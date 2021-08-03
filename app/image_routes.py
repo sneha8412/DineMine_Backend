@@ -23,7 +23,8 @@ def upload():
     db.session.add(img)
     db.session.commit()
 
-    return 'Img Uploaded!', 200
+    return jsonify({ "img_id": img.id, "details":"img uploaded"}), 200
+    #return 'Img Uploaded!', 200
 
 
 @image_bp.route('<image_id>',methods=['GET'])
