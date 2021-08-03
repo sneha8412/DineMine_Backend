@@ -13,6 +13,9 @@ class Host(db.Model):
     #create one to many relationship between host and experience (one host can have many experiences posted)
     experiences = db.relationship('Experience', backref='host', lazy = True)
     
+    #create one to one realtionship with the image 
+    images = db.relationship('Image', backref='host', lazy = True)
+    
     # user_profile_pic = db.Column()
     
     def get_host_info(self):

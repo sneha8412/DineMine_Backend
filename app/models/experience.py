@@ -20,6 +20,8 @@ class Experience(db.Model):
     #create a relationship with order - one experience can have many orders
     orders =  db.relationship('Order', backref='experience', lazy = True)
     
+    #create a realtionship with images - one experience can have many images
+    images =  db.relationship('Image', backref='experience', lazy = True)
     
     def get_exp_info(self):
         return {
