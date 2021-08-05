@@ -11,13 +11,10 @@ host_bp = Blueprint("/hosts", __name__, url_prefix="/hosts")
 @host_bp.route("", methods=["POST"], strict_slashes=False)
 def create_a_host():
     request_body = request.get_json()
-    if ("Host name" not in request_body or "Introduction" not in request_body or "Phone number" not in request_body or "Address" not in request_body):
-        return jsonify({"details": "Failed to create a host profile"}), 400
+    if ("name" not in request_body):
+        return jsonify({"details": "Host name required to create a host"}), 400
     
-    new_host = Host(host_full_name=request_body["Host name"], 
-                    host_introduction=request_body["Introduction"], 
-                    host_address=request_body["Address"], 
-                    host_phone =request_body["Phone number"])
+    new_host = Host.from_json(request_body)
     
     db.session.add(new_host)
     db.session.commit()
@@ -58,17 +55,9 @@ def update_a_host_profiles(host_id):
     form_data = request.get_json()
     
     if (form_data != None):
-        if ("Host name" in form_data.keys()):
-            host.host_full_name = form_data["Host name"]
+        updated_host = Host.from_json(form_data)
         
-        if ("Address" in form_data.keys()):
-            host.host_address = form_data["Address"]
-            
-        if ("Phone number" in form_data.keys()):
-            host.host_phone = form_data["Phone number"]
-        
-        if ("Introduction" in form_data.keys()):
-            host.host_introduction = form_data["Introduction"]
+        host.update_host(updated_host)
         
         db.session.add(host)
         db.session.commit()
