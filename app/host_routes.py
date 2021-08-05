@@ -18,7 +18,7 @@ def create_a_host():
     
     db.session.add(new_host)
     db.session.commit()
-    return jsonify({"Success": f"Host {new_host.host_full_name} is created"}), 201
+    return jsonify({ "host_id":new_host.host_id, "Success": f"Host {new_host.host_full_name} is created"}), 201
 
 
 #get a host profile

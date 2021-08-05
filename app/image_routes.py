@@ -10,6 +10,8 @@ image_bp = Blueprint("/images", __name__, url_prefix="/images")
 
 @image_bp.route('/host/<host_id>/upload', methods=['POST'])
 def upload(host_id):
+    
+    print("request = " + str(request.files));
     pic = request.files['pic']
     if not pic:
         return 'No pic uploaded!', 400

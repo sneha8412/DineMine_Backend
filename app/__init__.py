@@ -13,6 +13,7 @@ load_dotenv()
 #@cross_origin() #allow all origins all methods.
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     #change to mysql
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
