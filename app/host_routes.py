@@ -28,7 +28,7 @@ def get_a_host_profile(host_id):
     if host== None:
         return jsonify({"Error": "Host is not found"}, 404)
     else:
-        return make_response(host.get_host_info_id(), 200)
+        return make_response(host.get_host_info(), 200)
     
     
 #get all the hosts in that location #filter by location

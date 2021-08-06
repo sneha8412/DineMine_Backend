@@ -67,12 +67,13 @@ class Host(db.Model):
     def get_host_info(self):
         
         return{
+            "id": self.host_id,
             "name": self.host_full_name,
             "address" : self.host_address,
             "phone" : self.host_phone,
             "intro" :self.host_introduction,
             "city" : self.host_city,
-            "email" :self.host_email,
+            "email" :self.host_email
                 
         }
         
