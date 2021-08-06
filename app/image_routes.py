@@ -28,6 +28,7 @@ def upload(host_id):
 
     img = Image(img=pic.read(), name=filename, mimetype=mimetype)
     
+    host.images.clear()
     host.images.append(img)
     
     db.session.add(img)
@@ -46,3 +47,17 @@ def get_img(image_id):
         return 'Img Not Found!', 404
 
     return Response(img.img, mimetype=img.mimetype)
+
+# Downloads the host image
+@image_bp.route('/host/<host_id>', methods=['GET'])
+def get_host_image(host_id):
+
+    host = Host.query.get(host_id)
+    
+    if (len(host.images) > 0):
+        image = host.images[0]
+        
+        return Response(image.img, mimetype=image.mimetype)
+    
+    return 'Host has no image!', 404
+
