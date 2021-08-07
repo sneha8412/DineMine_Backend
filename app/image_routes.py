@@ -2,6 +2,7 @@ from flask import Blueprint, json, request, jsonify, make_response, Response
 from app import db, helper
 from .models.image import Image
 from .models.host import Host
+from .models.experience import Experience
 from flask import Flask, request, Response
 from werkzeug.utils import secure_filename
 
@@ -9,7 +10,7 @@ from werkzeug.utils import secure_filename
 image_bp = Blueprint("/images", __name__, url_prefix="/images")
 
 @image_bp.route('/host/<host_id>/upload', methods=['POST'])
-def upload(host_id):
+def upload_host_image(host_id):
     
     print("request = " + str(request.files));
     pic = request.files['pic']
@@ -36,7 +37,37 @@ def upload(host_id):
     
     db.session.commit()
 
-    return jsonify({ "img_id": img.id, "details": f"img uploaded for host {host.host_id}"}), 200
+    return jsonify({ "img_id": img.id, "details": f"img uploaded for host {host.host_id}"}), 201
+
+# Add an image for an experience
+@image_bp.route('/experience/<exp_id>/upload', methods=['POST'])
+def upload_experience_image(exp_id):
+    
+    print("request = " + str(request.files));
+    pic = request.files['pic']
+    if not pic:
+        return 'No pic uploaded!', 400
+
+    if (not helper.is_int(exp_id)):
+        return 'Invalid exp id!', 400
+
+    exp = Experience.query.get(exp_id)
+
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    if not filename or not mimetype:
+        return 'Bad upload!', 400
+
+    img = Image(img=pic.read(), name=filename, mimetype=mimetype)
+    
+    exp.images.append(img)
+    
+    db.session.add(img)
+    db.session.add(exp)
+    
+    db.session.commit()
+
+    return jsonify({ "img_id": img.id, "details": f"img uploaded for experience {exp.exp_id}"}), 201
 
 
 @image_bp.route('<image_id>',methods=['GET'])
@@ -61,3 +92,18 @@ def get_host_image(host_id):
     
     return 'Host has no image!', 404
 
+# Gets all the images associated with an experience
+@image_bp.route('/experience/<exp_id>', methods=['GET'])
+def get_experience_images(exp_id):
+
+    exp = Experience.query.get(exp_id)
+    
+    exp_images = []
+    
+    if (len(exp.images) > 0):
+        for exp_img in exp.images:
+          exp_images.append(exp_img.to_json())  
+        
+        return Response(exp_images), 200
+    
+    return f'No images found for experience id = {exp_id}!', 404

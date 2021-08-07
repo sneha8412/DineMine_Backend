@@ -11,3 +11,15 @@ class Image(db.Model):
     
     #create relationship with experience (one experience can have many photos -ideally minimum 5 photos)
     exp_id = db.Column(db.Integer, db.ForeignKey('experience.exp_id'))
+    
+    
+    def to_json(self):
+        return {
+        "id" : self.id,
+        "img" : self.img,
+        "name" : self.name,
+        "mimetype" : self.mimetype,
+        "host_id": self.host_id,
+        "exp_id": self.exp_id
+    }
+    
