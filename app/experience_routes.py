@@ -6,10 +6,10 @@ from .models.host import Host
 from .models.order import Order
 from .models.experience import Experience
 
-experience_bp = Blueprint("/hosts/<host_id>/", __name__, url_prefix="/hosts/<host_id>/")
+experience_bp = Blueprint("/experiences", __name__, url_prefix="/experiences")
 
 #create a new experience
-@experience_bp.route("", methods=["POST"], strict_slashes=False)
+@experience_bp.route("/hosts/<host_id>", methods=["POST"], strict_slashes=False)
 def create_an_experience(host_id):
     
     host = Host.query.get(host_id)
@@ -35,10 +35,12 @@ def create_an_experience(host_id):
                     dinetime=request_body["Dine time"]
                     )
     
+    host.experiences.append(new_experience)
+    
     db.session.add(new_experience)
     db.session.add(host)
     db.session.commit()
-    return jsonify({"Success": f"Experience {new_experience.exp_title} is created"}), 201
+    return jsonify({ "experience_id": new_experience.exp_id, "Success": f"Experience {new_experience.exp_title} is created"}), 201
 
 
 #get an experience
@@ -52,18 +54,17 @@ def get_an_experience_detail(experience_id):
 
 
 # #get all experience based of one host
-# @experience_bp.route("", methods=["GET"], strict_slashes=False)
-# def get_an_experience_detail():
-#     experiences = Experience.query.all()
+@experience_bp.route("/hosts/<host_id>", methods=["GET"], strict_slashes=False)
+def get_host_experiences(host_id):
     
-#     exp_response = []
-#     for experience in experiences:
-#         exp_response.append(experience.get_exp_info())
-#     return jsonify(exp_response), 200
+    host = Host.query.get(host_id)
+    
+    exp_response = []
+    for experience in host.experiences:
+        exp_response.append(experience.get_exp_info())
+    return jsonify(exp_response), 200
 
 #get all experience based on one location
-
-
     
 #update the experience (host does this)
 @experience_bp.route("<experience_id>", methods=["PUT"], strict_slashes=False)
@@ -95,6 +96,6 @@ def update_an_experience_detail(experience_id):
         db.session.add(experience)
         db.session.commit()
         
-        return experience.get_experience_info(), 200
+        return experience.get_exp_info(), 200
     
     return jsonify({"details": "Failed to update, please try again"}), 400
