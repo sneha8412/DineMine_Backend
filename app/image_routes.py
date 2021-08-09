@@ -98,12 +98,15 @@ def get_experience_images(exp_id):
 
     exp = Experience.query.get(exp_id)
     
+    if (not exp):
+        f'No experience found for id = {exp_id}!', 404
+    
     exp_images = []
     
     if (len(exp.images) > 0):
         for exp_img in exp.images:
-          exp_images.append(exp_img.to_json())  
+          exp_images.append(exp_img.to_json())
         
-        return Response(exp_images), 200
-    
-    return f'No images found for experience id = {exp_id}!', 404
+        #return Response(exp_images), 200  
+        
+    return jsonify(exp_images), 200

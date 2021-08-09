@@ -16,7 +16,6 @@ class Image(db.Model):
     def to_json(self):
         return {
         "id" : self.id,
-        "img" : self.img,
         "name" : self.name,
         "mimetype" : self.mimetype,
         "host_id": self.host_id,
