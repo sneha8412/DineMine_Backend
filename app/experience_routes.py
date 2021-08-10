@@ -23,7 +23,8 @@ def create_an_experience(host_id):
         "Price" not in request_body or 
         "Description" not in request_body or
         "Cuisine" not in request_body or 
-        "Dine time" not in request_body 
+        "Dine time" not in request_body or
+        "City" not in request_body
         ):
         return jsonify({"details": "Failed to create experience"}), 400
     
@@ -32,7 +33,8 @@ def create_an_experience(host_id):
                     exp_title=request_body["Title"], 
                     cuisine=request_body["Cuisine"], 
                     exp_price =request_body["Price"],
-                    dinetime=request_body["Dine time"]
+                    dinetime=request_body["Dine time"],
+                    city=request_body["City"]
                     )
     
     host.experiences.append(new_experience)
@@ -102,6 +104,9 @@ def update_an_experience_detail(experience_id):
         
         if ("Dine time" in form_data.keys()):
             experience.dinetime = form_data["Dine time"]
+        
+        if ("City" in form_data.keys()):
+            experience.city = form_data["City"]
             
         
         db.session.add(experience)

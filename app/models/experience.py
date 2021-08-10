@@ -11,6 +11,7 @@ class Experience(db.Model):
     exp_price = db.Column(db.Float)
     exp_description = db.Column(db.String(500))
     dinetime = db.Column(db.String(15))
+    city = db.Column(db.String)
     #pictures
     #order_status = db.column()
     
@@ -31,7 +32,8 @@ class Experience(db.Model):
             "Price" : self.exp_price,
             "Description" : self.exp_description,
             "Cuisine" :self.cuisine,
-            "Dine time" : self.dinetime 
+            "Dine time" : self.dinetime,
+            "City": self.city
             
         }
         
@@ -44,5 +46,6 @@ class Experience(db.Model):
             "Price" : self.exp_price,
             "Description" : self.exp_description,
             "Cuisine" :self.cuisine,
-            "Dine time" : self.dinetime 
+            "Dine time" : self.dinetime,
+            "City" : self.city
         }
