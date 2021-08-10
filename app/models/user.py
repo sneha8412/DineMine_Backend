@@ -10,6 +10,9 @@ class User(db.Model):
     user_phone = db.Column(db.String)
     # user_profile_pic = db.Column()
     
+    #create user  host one-to-one relationship
+    host = db.relationship("Host", backref='user', lazy = True)
+    
     #create one to many relationship user and order (one user has many orders)
     orders = db.relationship('Order', backref='user', lazy = True)
     

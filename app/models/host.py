@@ -19,6 +19,9 @@ class Host(db.Model):
     #create one to one realtionship with the image 
     images = db.relationship('Image', backref='host', lazy = True)
     
+    #create one-to-one with User
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    
     # user_profile_pic = db.Column()
     @staticmethod
     def from_json(host_json):
