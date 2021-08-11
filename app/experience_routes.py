@@ -54,6 +54,8 @@ def get_all_experiences():
     
     sort_by_price = request.args.get("sort")
     location_query = request.args.get("city")
+    dinetime_query = request.args.get("dinetime")
+    cuisine_query = request.args.get("cuisine")
     
     exp_list = []
     
@@ -66,9 +68,15 @@ def get_all_experiences():
     
     #filter by location  
     if location_query is not None:
-        experiences = Experience.query.filter_by(city=location_query)    
+        experiences = Experience.query.filter_by(city=location_query.lower())    
 
-    #filter by total_num of guests
+    #filter by dinetimes
+    if dinetime_query is not None:
+        experiences = Experience.query.filter_by(dinetime = dinetime_query.lower()) 
+    
+    #filter by cuisine type
+    if cuisine_query is not None:
+        experiences = Experience.query.filter_by(cuisine = cuisine_query.lower())
     
     else:
         experiences = Experience.query.all()
