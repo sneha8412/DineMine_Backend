@@ -8,7 +8,8 @@ from werkzeug.utils import secure_filename
 
 
 image_bp = Blueprint("/images", __name__, url_prefix="/images")
-
+#-------------------------------------------------------------------------------
+#Upload an image for the host
 @image_bp.route('/host/<host_id>/upload', methods=['POST'])
 def upload_host_image(host_id):
     
@@ -39,6 +40,8 @@ def upload_host_image(host_id):
 
     return jsonify({ "img_id": img.id, "details": f"img uploaded for host {host.host_id}"}), 201
 
+
+#------------------------------------------------------------------------------------------------
 # Add an image for an experience
 @image_bp.route('/experience/<exp_id>/upload', methods=['POST'])
 def upload_experience_image(exp_id):
@@ -70,6 +73,7 @@ def upload_experience_image(exp_id):
     return jsonify({ "img_id": img.id, "details": f"img uploaded for experience {exp.exp_id}"}), 201
 
 
+#-----------------------------------------------------------------------------------------------------
 @image_bp.route('<image_id>',methods=['GET'])
 def get_img(image_id):
     print(f"image id: {image_id}")
@@ -79,6 +83,8 @@ def get_img(image_id):
 
     return Response(img.img, mimetype=img.mimetype)
 
+
+#-------------------------------------------------------------------------------------------
 # Downloads the host image
 @image_bp.route('/host/<host_id>', methods=['GET'])
 def get_host_image(host_id):
@@ -92,6 +98,7 @@ def get_host_image(host_id):
     
     return 'Host has no image!', 404
 
+#--------------------------------------------------------------------------------------------
 # Gets all the images associated with an experience
 @image_bp.route('/experience/<exp_id>', methods=['GET'])
 def get_experience_images(exp_id):

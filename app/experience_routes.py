@@ -47,11 +47,12 @@ def create_an_experience(host_id):
     db.session.commit()
     return jsonify({ "experience_id": new_experience.exp_id, "Success": f"Experience {new_experience.exp_title} is created"}), 201
 
-
+#----------------------------------------------------------------------------------------------------------------------------
 #get experience by location
 @experience_bp.route("", methods=["GET"], strict_slashes=False)
 def get_all_experiences():
     
+     
     sort_by_price = request.args.get("sort")
     location_query = request.args.get("city")
     dinetime_query = request.args.get("dinetime")
@@ -59,32 +60,28 @@ def get_all_experiences():
     
     exp_list = []
     
+    # experiences = Experience.query.all()
+    
     #filter by location  
     if location_query is not None:
-        print("location query")
-        experiences = Experience.query.filter(Experience.city and Experience.city == location_query).all()    
-
-    #filter by dinetimes
-    if dinetime_query:
-        print("dinetime query " + str(dinetime_query))
-        
-        experiences = Experience.query.filter(Experience.dinetime.contains(dinetime_query)).all()  
-    
-    #filter by cuisine type
-    if cuisine_query is not None:
-        print("cuisine query")
+        # print("location query")
+        experiences = Experience.query.filter_by(city = location_query)
+    # filter by dinetimes
+    elif dinetime_query is not None:
+        # print("dinetime query " + str(dinetime_query)) 
+        experiences = Experience.query.filter_by(dinetime = dinetime_query)
+    # filter by cuisine type
+    elif cuisine_query is not None:
+        # print("cuisine query" + str(cuisine_query) )
         experiences = Experience.query.filter_by(cuisine = cuisine_query)
-    
     else:
         experiences = Experience.query.all()
 
     #sort by price
     if sort_by_price is not None:
         if sort_by_price == "asc":
-            #experiences.sort(key=lambda x: x.exp_price, reverse=False)
             experiences = db.session.query(Experience).order_by(asc(Experience.exp_price))
-        else:
-            #experiences.sort(key=lambda x: x.exp_price, reverse=True)
+        else:    
             experiences = db.session.query(Experience).order_by(desc(Experience.exp_price))
 
             
@@ -94,20 +91,7 @@ def get_all_experiences():
     
     return jsonify(exp_list), 200
 
-
-#get all experiences
-# @experience_bp.route("", methods=["GET"], strict_slashes=False)
-# def get_all_experiences():
-    
-#     experiences = Experience.query.all()
-    
-#     expList = []
-    
-#     for exp in experiences:
-#         expList.append(exp.get_exp_info())        
-    
-#     return jsonify(expList), 200
-
+#------------------------------------------------------------------------------------------------------
 #get an experience
 @experience_bp.route("<experience_id>", methods=["GET"], strict_slashes=False)
 def get_an_experience_detail(experience_id):
@@ -117,7 +101,7 @@ def get_an_experience_detail(experience_id):
     else:
         return make_response(experience.get_exp_info(), 200)
 
-
+#------------------------------------------------------------------------------------------------------
 # #get all experience based of one host
 @experience_bp.route("/hosts/<host_id>", methods=["GET"], strict_slashes=False)
 def get_host_experiences(host_id):
@@ -129,9 +113,9 @@ def get_host_experiences(host_id):
         exp_response.append(experience.get_exp_info())
     return jsonify(exp_response), 200
 
-#get all experience based on one location
-    
-#update the experience (host does this)
+
+#--------------------------------------------------------------------------------------------------------
+#update an experience (host does this)
 @experience_bp.route("<experience_id>", methods=["PUT"], strict_slashes=False)
 def update_an_experience_detail(experience_id):     
     experience  = Experience.query.get(experience_id)
@@ -170,3 +154,35 @@ def update_an_experience_detail(experience_id):
         return experience.get_exp_info(), 200
     
     return jsonify({"details": "Failed to update, please try again"}), 400
+
+#----------------------------------------------------------------------------------------------------
+#delete an Experience
+@experience_bp.route("/<experience_id>", methods=["DELETE"])
+def delete_an_experience(experience_id):
+    
+    experience = Experience.query.get(experience_id)
+    
+    if experience == None:
+        return jsonify({"details" : f"No experience with ID number {experience_id} found "},404)
+    
+    db.session.delete(experience)
+    db.session.commit() #how can we transfer this to a seperate column of deleted hosts
+    
+    return jsonify({"Success": "Experience is deleted"}), 200
+
+#----------------------------------------------------------------------------------------------------
+#delete all Experiences
+@experience_bp.route("", methods=["DELETE"])
+def delete_all_experiences_for_a_host():
+    
+    experiences = Experience.query.all()
+    
+    if len(experiences) == 0:
+        return jsonify({"details" : f"No experiences found "},404)
+    
+    experiences.clear()
+    db.session.delete(experiences)
+    db.session.commit()
+        
+    return jsonify({"Success": "All Experiences for host is deleted"}), 200
+ 

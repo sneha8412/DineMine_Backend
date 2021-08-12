@@ -14,7 +14,7 @@ order_bp = Blueprint("/orders", __name__, url_prefix="/")
 def create_an_order(experience_id):
     pass
 
-
+#--------------------------------------------------------------------------
 #get an order detail
 @order_bp.route("<order_id>", methods=["GET"], strict_slashes=False)
 def get_an_order_detail(order_id):
@@ -24,7 +24,7 @@ def get_an_order_detail(order_id):
     else:
         return make_response(order.get_order_details(), 200)
     
-    
+#--------------------------------------------------------------------------    
 #update the status of the order (cancel)
 @order_bp.route("<order_id>", methods=["PUT"], strict_slashes=False)
 def update_an_order_detail(order_id):     
