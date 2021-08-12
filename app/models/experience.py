@@ -35,7 +35,7 @@ class Experience(db.Model):
             "Cuisine" :self.cuisine,
             "Dine time" : self.dinetime,
             "City": self.city,
-            "Total number of Guests" : self.total_number_of_guests
+            "Total number of guests" : self.total_number_of_guests
             
         }
         
@@ -50,5 +50,5 @@ class Experience(db.Model):
             "Cuisine" :self.cuisine,
             "Dine time" : self.dinetime,
             "City" : self.city,
-            "Total number of Guests" : self.total_number_of_guests
+            "Total number of guests" : self.total_number_of_guests
         }

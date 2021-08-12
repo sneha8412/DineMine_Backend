@@ -26,7 +26,7 @@ def create_an_experience(host_id):
         "Cuisine" not in request_body or 
         "Dine time" not in request_body or
         "City" not in request_body or
-        "Total number of Guests" not in request_body):
+        "Total number of guests" not in request_body):
         
         return jsonify({"details": "Failed to create experience"}), 400
     
@@ -37,7 +37,7 @@ def create_an_experience(host_id):
                     exp_price =request_body["Price"],
                     dinetime=request_body["Dine time"],
                     city=request_body["City"],
-                    total_number_of_guests= request_body["Total number of Guests"]
+                    total_number_of_guests= request_body["Total number of guests"]
                     )
     
     host.experiences.append(new_experience)
@@ -59,29 +59,37 @@ def get_all_experiences():
     
     exp_list = []
     
-    #sort by price
-    if sort_by_price is not None:
-        if sort_by_price == "asc":
-            exp_list = db.session.quesry(Experience).order_by(asc(Experience.price))
-        else:
-            exp_list = db.session.query(Experience).order_by(desc(Experience.price))
-    
     #filter by location  
     if location_query is not None:
-        experiences = Experience.query.filter_by(city=location_query.lower())    
+        print("location query")
+        experiences = Experience.query.filter(Experience.city and Experience.city == location_query).all()    
 
     #filter by dinetimes
-    if dinetime_query is not None:
-        experiences = Experience.query.filter_by(dinetime = dinetime_query.lower()) 
+    if dinetime_query:
+        print("dinetime query " + str(dinetime_query))
+        
+        experiences = Experience.query.filter(Experience.dinetime.contains(dinetime_query)).all()  
     
     #filter by cuisine type
     if cuisine_query is not None:
-        experiences = Experience.query.filter_by(cuisine = cuisine_query.lower())
+        print("cuisine query")
+        experiences = Experience.query.filter_by(cuisine = cuisine_query)
     
     else:
         experiences = Experience.query.all()
+
+    #sort by price
+    if sort_by_price is not None:
+        if sort_by_price == "asc":
+            #experiences.sort(key=lambda x: x.exp_price, reverse=False)
+            experiences = db.session.query(Experience).order_by(asc(Experience.exp_price))
+        else:
+            #experiences.sort(key=lambda x: x.exp_price, reverse=True)
+            experiences = db.session.query(Experience).order_by(desc(Experience.exp_price))
+
             
     for exp in experiences:
+        print("exp = " + str(exp.dinetime))
         exp_list.append(exp.get_exp_info())        
     
     return jsonify(exp_list), 200
@@ -152,8 +160,8 @@ def update_an_experience_detail(experience_id):
         if ("City" in form_data.keys()):
             experience.city = form_data["City"]
             
-        if ("Total number of Guests" in form_data.keys()):
-            experience.total_number_of_guests = form_data["Total number of Guests"]
+        if ("Total number of guests" in form_data.keys()):
+            experience.total_number_of_guests = form_data["Total number of guests"]
             
         
         db.session.add(experience)
