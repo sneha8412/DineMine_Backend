@@ -1,4 +1,3 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/ddf748d5-9a7c-4fe2-9d54-ae5dd77ebad1/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/dine-mine",
     "appService.deploySubpath": "."
 }
