@@ -171,18 +171,22 @@ def delete_an_experience(experience_id):
     return jsonify({"Success": "Experience is deleted"}), 200
 
 #----------------------------------------------------------------------------------------------------
-#delete all Experiences
-@experience_bp.route("", methods=["DELETE"])
-def delete_all_experiences_for_a_host():
+# #delete all Experiences
+# @experience_bp.route("/hosts/<host_id>", methods=["DELETE"])
+# def delete_all_experiences_for_a_host(host_id):
     
-    experiences = Experience.query.all()
+#     host = Host.query.get(host_id)
     
-    if len(experiences) == 0:
-        return jsonify({"details" : f"No experiences found "},404)
+#     if not host or host == None:
+#         return jsonify({"details": "No Host found"}), 404
     
-    experiences.clear()
-    db.session.delete(experiences)
-    db.session.commit()
+#     # experiences = Experience.query.get(host_id)
+    
+#     # if len(host.experiences) == 0:
+#     #    return jsonify({"details" : f"No experiences found "},404)
+    
+#     db.session.delete(host.experiences)
+#     db.session.commit()
         
-    return jsonify({"Success": "All Experiences for host is deleted"}), 200
+#     return jsonify({"Success": "All Experiences for host is deleted"}), 200
  
