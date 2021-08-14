@@ -3,8 +3,8 @@ from flask import Blueprint, json, request, jsonify, make_response, Response
 from app import db
 # from app.models.board import Board
 from .models.host import Host
-from .models.order import Order
 from .models.experience import Experience
+from .models.image import Image
 from sqlalchemy import desc, asc
 
 experience_bp = Blueprint("/experiences", __name__, url_prefix="/experiences")
@@ -83,11 +83,16 @@ def get_all_experiences():
             experiences = db.session.query(Experience).order_by(asc(Experience.exp_price))
         else:    
             experiences = db.session.query(Experience).order_by(desc(Experience.exp_price))
-
-            
+        
     for exp in experiences:
-        print("exp = " + str(exp.dinetime))
-        exp_list.append(exp.get_exp_info())        
+        
+        expImages = db.session.query(Image).filter(Image.exp_id == exp.exp_id).all()
+        
+        expFirstImageId = ""
+        if (expImages != None and len(expImages) > 0):
+            expFirstImageId = expImages[0].id   
+        
+        exp_list.append(exp.get_exp_info_with_image(expFirstImageId))        
     
     return jsonify(exp_list), 200
 
