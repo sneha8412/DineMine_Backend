@@ -11,13 +11,14 @@ user_bp = Blueprint("/users", __name__, url_prefix="/users")
 @user_bp.route("", methods=["POST"], strict_slashes=False)
 def create_a_user():
     request_body = request.get_json()
-    if ("Username" not in request_body or "Full name" not in request_body or "Phone number" not in request_body or "Address" not in request_body):
+    if ("Full name" not in request_body or "Email" not in request_body):
         return jsonify({"details": "Failed to create a user profile"}), 400
     
     new_user = User(username= request_body["Username"],
                     user_full_name = request_body["Full name"], 
                     user_address=request_body["Address"], 
-                    user_phone=request_body["Phone number"])
+                    user_phone=request_body["Phone number"],
+                    user_email = request_body["Email"])
     
     db.session.add(new_user)
     db.session.commit()

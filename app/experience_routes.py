@@ -69,7 +69,7 @@ def get_all_experiences():
     # filter by dinetimes
     elif dinetime_query is not None:
         # print("dinetime query " + str(dinetime_query)) 
-        experiences = Experience.query.filter_by(dinetime = dinetime_query)
+        experiences = db.session.query(Experience).filter(Experience.dinetime == dinetime_query).all() #filter_by(dinetime = dinetime_query)
     # filter by cuisine type
     elif cuisine_query is not None:
         # print("cuisine query" + str(cuisine_query) )
