@@ -52,6 +52,20 @@ class Experience(db.Model):
             "Total number of guests" : self.total_number_of_guests,
             "ImageId": imageId
         }
+    
+    def get_exp_info_with_all_images(self, imageIds=[]):
+        return {
+            "Experience ID" : self.exp_id,
+            "Host ID" : self.host_id,
+            "Title" : self.exp_title,
+            "Price" : self.exp_price,
+            "Description" : self.exp_description,
+            "Cuisine" :self.cuisine,
+            "Dine time" : self.dinetime,
+            "City": self.city,
+            "Total number of guests" : self.total_number_of_guests,
+            "ImageIds": imageIds
+        }    
         
     def get_exp_order_info(self):
         return{

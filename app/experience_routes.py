@@ -101,10 +101,20 @@ def get_all_experiences():
 @experience_bp.route("<experience_id>", methods=["GET"], strict_slashes=False)
 def get_an_experience_detail(experience_id):
     experience = Experience.query.get(experience_id)
+    
+    expImages = db.session.query(Image).filter(Image.exp_id == experience_id).all()
+    
+    imageIds = []
+    
+    expFirstImageId = ""
+    if (expImages != None and len(expImages) > 0):
+        for expImg in expImages:
+         imageIds.append(expImg.id)
+    
     if experience == None:
         return jsonify({"Error": "Experience not found"}, 404)
     else:
-        return make_response(experience.get_exp_info(), 200)
+        return make_response(experience.get_exp_info_with_all_images(imageIds), 200)
 
 #------------------------------------------------------------------------------------------------------
 # #get all experience based of one host
@@ -115,7 +125,14 @@ def get_host_experiences(host_id):
     
     exp_response = []
     for experience in host.experiences:
-        exp_response.append(experience.get_exp_info())
+        expImages = db.session.query(Image).filter(Image.exp_id == experience.exp_id).all()
+        
+        expFirstImageId = ""
+        if (expImages != None and len(expImages) > 0):
+            expFirstImageId = expImages[0].id  
+             
+        exp_response.append(experience.get_exp_info_with_image(expFirstImageId))
+        
     return jsonify(exp_response), 200
 
 
