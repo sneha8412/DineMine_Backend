@@ -42,7 +42,10 @@ class Host(db.Model):
             host.host_city = host_json["city"]
             
         if ("email" in host_json):
-            host.host_email = host_json["email"] 
+            host.host_email = host_json["email"]
+            
+        if ("user_id" in host_json):
+            host.user_id = host_json["user_id"] 
         
         return host
     
@@ -66,6 +69,9 @@ class Host(db.Model):
         if (updated_host.host_introduction):
             self.host_introduction = updated_host.host_introduction
 
+        if(updated_host.user_id):
+            self.user_id = updated_host.user_id
+            
     
     def get_host_info(self):
         
@@ -76,7 +82,8 @@ class Host(db.Model):
             "phone" : self.host_phone,
             "intro" :self.host_introduction,
             "city" : self.host_city,
-            "email" :self.host_email
+            "email" :self.host_email,
+            "user_id": self.user_id
                 
         }
         
@@ -89,5 +96,6 @@ class Host(db.Model):
             "Phone number" : self.host_phone,
             "Introduction" :self.host_introduction, 
             "Total Experiences" : len(self.experiences),
-            "Experiences" : self.experiences #list of experiences
+            "UserId": self.user_id
+            #"Experiences" : self.experiences #list of experiences
         }

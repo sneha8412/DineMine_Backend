@@ -14,16 +14,24 @@ def create_a_user():
     if ("Full name" not in request_body or "Email" not in request_body):
         return jsonify({"details": "Failed to create a user profile"}), 400
     
+    address = ""
+    if ("Address" in request_body):
+        address =  request_body["Address"];
+    
+    phone = ""
+    if ("Phone number" in request_body):
+        phone =  request_body["Phone number"];     
+    
     new_user = User(username= request_body["Username"],
                     user_full_name = request_body["Full name"], 
-                    user_address=request_body["Address"], 
-                    user_phone=request_body["Phone number"],
+                    user_address = address, 
+                    user_phone = phone,
                     user_email = request_body["Email"])
     
     db.session.add(new_user)
     db.session.commit()
     
-    return jsonify({"Success": f"User {new_user.username} is created"}), 201
+    return jsonify({ "user_id": new_user.user_id, "Success": f"User {new_user.username} is created"}), 201
 
 
 #get a user profile
@@ -39,10 +47,17 @@ def get_a_user_profile(user_id):
 #get all users
 @user_bp.route("", methods=["GET"])
 def get_all_users():
-    users = User.query.all()
+    
+    user_email_filter = request.args.get("email")
+    
+    matching_users = []
+    if (user_email_filter is not None):
+        matching_users = User.query.filter_by(user_email = user_email_filter)
+    else:
+        matching_users = User.query.all()
     
     user_response = []
-    for user in users:
+    for user in matching_users:
         user_response.append(user.get_user_info())
     return jsonify(user_response), 200
 

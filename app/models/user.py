@@ -8,7 +8,7 @@ class User(db.Model):
     user_full_name = db.Column(db.String)
     user_address = db.Column(db.String)
     user_phone = db.Column(db.String)
-    user_email = db.Column(db.String)
+    user_email = db.Column(db.String, unique=True)
     # user_profile_pic = db.Column()
     
     #create user  host one-to-one relationship

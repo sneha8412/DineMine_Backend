@@ -35,7 +35,13 @@ def get_a_host_profile(host_id):
 @host_bp.route("", methods=["GET"])
 def get_all_hosts_profiles():
     
-    hosts = Host.query.all()
+    user_id_filter = request.args.get("user_id")
+    
+    hosts = []
+    if (user_id_filter is not None):
+        hosts = Host.query.filter_by(user_id = user_id_filter)
+    else:
+        hosts = Host.query.all()
     
     host_response = []
     for host in hosts:
