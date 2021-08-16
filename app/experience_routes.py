@@ -158,7 +158,7 @@ def update_an_experience_detail(experience_id):
              experience.exp_description = form_data["Description"]
         
         if ("Cuisine" in form_data.keys()):
-            experience.exp_description = form_data["Cuisine"]
+            experience.cuisine = form_data["Cuisine"]
         
         if ("Dine time" in form_data.keys()):
             experience.dinetime = form_data["Dine time"]
