@@ -110,228 +110,226 @@ this app uses
 
     Follow the directions to install [the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)  :
 
-   ```
-   $ brew tap heroku/brew && brew install heroku
+    ```
+    $ brew tap heroku/brew && brew install heroku
 
-   ```
+    ```
 
-   This command runs two separate commands. The `&&` joins them into one convenient copy/paste-able unit.
+    This command runs two separate commands. The `&&` joins them into one convenient copy/paste-able unit.
 
-   The first command `brew tap heroku/brew` tells Homebrew to add an additional source of software packages (termed a *tap* in Homebrew-speak). The second command `brew install heroku` uses Homebrew to install the Heroku CLI, which it will be able to find with the tap we just configured.
+    The first command `brew tap heroku/brew` tells Homebrew to add an additional source of software packages (termed a *tap* in Homebrew-speak). The second command  `brew install heroku` uses Homebrew to install the Heroku CLI, which it will be able to find with the tap we just configured.
 
-   ### **Log In to the Heroku CLI**
+    ### **Log In to the Heroku CLI**
 
-   The Heroku CLI needs to authenticate our user account. Follow the directions to [log into the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#getting-started)  :
+    The Heroku CLI needs to authenticate our user account. Follow the directions to [log into the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#getting-started)  :
 
-   ```
-   $ heroku login
+    ```
+    $ heroku login
+ 
+    ```
 
-   ```
+    We'll be prompted to press any key to go to a web browser to complete our login. The CLI will then log us in automatically.
 
-   We'll be prompted to press any key to go to a web browser to complete our login. The CLI will then log us in automatically.
+    # **Configure Our Flask App for Heroku**
 
-   # **Configure Our Flask App for Heroku**
+    Although Heroku will do a lot of the work of hosting, running, and maintaining our API server, we need to add a small amount of configuration to our project.
 
-   Although Heroku will do a lot of the work of hosting, running, and maintaining our API server, we need to add a small amount of configuration to our project.
+    ### **Check Dependencies for `gunicorn`**
 
-   ### **Check Dependencies for `gunicorn`**
+    We will use a Python package named [gunicorn](https://pypi.org/project/gunicorn/)  to launch our Flask API on Heroku.
 
-   We will use a Python package named [gunicorn](https://pypi.org/project/gunicorn/)  to launch our Flask API on Heroku.
+    `gunicorn` is capable of running Flask apps so that they can handle multiple simultaneous requests, which is very important for production web applications.
 
-   `gunicorn` is capable of running Flask apps so that they can handle multiple simultaneous requests, which is very important for production web applications.
+    We should confirm that the package `gunicorn` is in the project's `requirements.txt` file.
 
-   We should confirm that the package `gunicorn` is in the project's `requirements.txt` file.
+    If `gunicorn` does *not* appear in our `requirement.txt`, we can add it by installing it locally with:
 
-   If `gunicorn` does *not* appear in our `requirement.txt`, we can add it by installing it locally with:
+    ```
+    (venv) $ pip install gunicorn
+ 
+    ```
 
-   ```
-   (venv) $ pip install gunicorn
+    After it has installed, we can update our `requirements.txt` by running:
 
-   ```
+    ```
+    (venv) $ pip freeze > requirements.txt
+ 
+    ```
 
-   After it has installed, we can update our `requirements.txt` by running:
+    Heroku makes use of our `requirements.txt` file to install our app dependencies, so it is very important to ensure that all of our dependencies are properly listed.
 
-   ```
-   (venv) $ pip freeze > requirements.txt
+    If we needed to update our `requirements.txt`, we should be sure to add and commit this change.
 
-   ```
+    ### **Create a Procfile for Heroku**
 
-   Heroku makes use of our `requirements.txt` file to install our app dependencies, so it is very important to ensure that all of our dependencies are properly listed.
+    `[Procfile`](https://devcenter.heroku.com/articles/procfile)  is a file specifically used in codebases deployed on Heroku.
 
-   If we needed to update our `requirements.txt`, we should be sure to add and commit this change.
+    We'll use our Procfile to define how to start our Flask web server.
+ 
+    First, create a `Procfile` inside the project root. This file *must be named exactly `Procfile`, **with no file extension***.
 
-   ### **Create a Procfile for Heroku**
+    ```
+    $ touch Procfile
+ 
+    ```
 
-   `[Procfile`](https://devcenter.heroku.com/articles/procfile)  is a file specifically used in codebases deployed on Heroku.
+    Then, fill the Procfile with this content:
 
-   We'll use our Procfile to define how to start our Flask web server.
+    ```
+    web: gunicorn 'app:create_app()'
+ 
+    ```
 
-   First, create a `Procfile` inside the project root. This file *must be named exactly `Procfile`, **with no file extension***.
+    # **Commit**
 
-   ```
-   $ touch Procfile
+    Save this file. Then, create a Git commit that contains this change.
 
-   ```
+    # **Create a Heroku App**
 
-   Then, fill the Procfile with this content:
+    For each project we deploy, we will need to create and manage a Heroku app. Our Heroku app will give us visibility, access, and tools to manage our deployed app.
 
-   ```
-   web: gunicorn 'app:create_app()'
+    After `cd`ing to our project root, we can create a Heroku app using the Heroku CLI. From the command line we should pick **either** of these options:
 
-   ```
+    1. We can create a Heroku app with an automatically generated app name using:
+ 
+    ```
+    $ heroku create
 
-   # **Commit**
+    ```
+    **OR**
+    2. We can create our app with the name `your-app-name` using:
 
-   Save this file. Then, create a Git commit that contains this change.
+    ```
+    $ heroku create your-app-name
+ 
+    ```
 
-   # **Create a Heroku App**
+    Replace `your-app-name` with the desired name of the app.
 
-   For each project we deploy, we will need to create and manage a Heroku app. Our Heroku app will give us visibility, access, and tools to manage our deployed app.
+    Our Heroku app doesn't have access to our Flask API code yet, so we'll see a default Heroku message.
 
-   After `cd`ing to our project root, we can create a Heroku app using the Heroku CLI. From the command line we should pick **either** of these options:
+    ### **Our New Heroku App**
 
-   1. We can create a Heroku app with an automatically generated app name using:
-
-   ```
-   $ heroku create
-
-   ```
-   **OR**
-   2. We can create our app with the name `your-app-name` using:
-
-   ```
-   $ heroku create your-app-name
-
-   ```
-
-   Replace `your-app-name` with the desired name of the app.
-
-   Our Heroku app doesn't have access to our Flask API code yet, so we'll see a default Heroku message.
-
-   ### **Our New Heroku App**
-
-   We have officially created a Heroku app that is accessible online! We can follow the link from the `heroku create` output.
+    We have officially created a Heroku app that is accessible online! We can follow the link from the `heroku create` output.
    
-   <img width="955" alt="Screen Shot 2021-08-17 at 3 32 43 PM" src="https://user-images.githubusercontent.com/68921168/129810302-5cea1c90-954b-4bd7-bd41-80f653d96591.png">
+    <img width="955" alt="Screen Shot 2021-08-17 at 3 32 43 PM" src="https://user-images.githubusercontent.com/68921168/129810302-5cea1c90-954b-4bd7-bd41-80f653d96591.png">
 
    
-   ### **Verify the New Heroku Remote**
+    ### **Verify the New Heroku Remote**
 
-   Creating a Heroku app will add a new Git remote to our project! A Git remote is a destination to which we can `git push`!
+    Creating a Heroku app will add a new Git remote to our project! A Git remote is a destination to which we can `git push`!
 
-   The new Git remote will be named `heroku`. This Git remote points exactly to where Heroku keeps and serves our code!
+    The new Git remote will be named `heroku`. This Git remote points exactly to where Heroku keeps and serves our code!
 
-   Confirm that we have a `heroku` remote by running this command:
+    Confirm that we have a `heroku` remote by running this command:
 
-   ```
-   $ git remote -v
+    ```
+    $ git remote -v
 
-   ```
+    ```
 
-   We should see the `heroku` remote listed alongside our `origin` remote.
+    We should see the `heroku` remote listed alongside our `origin` remote.
 
-   ### **Verify in the Dashboard**
+    ### **Verify in the Dashboard**
 
-   Creating a Heroku app will associate this app to our Heroku account.
+    Creating a Heroku app will associate this app to our Heroku account.
 
-   Visit the Heroku dashboard and see your new app listed! We'll visit this dashboard whenever we need details about our Heroku app.
+    Visit the Heroku dashboard and see your new app listed! We'll visit this dashboard whenever we need details about our Heroku app.
 
-   <img width="961" alt="Screen Shot 2021-08-17 at 3 33 24 PM" src="https://user-images.githubusercontent.com/68921168/129809388-c8c772e8-ddfa-4990-9c78-23f0d5b88cd3.png">
+    <img width="961" alt="Screen Shot 2021-08-17 at 3 33 24 PM" src="https://user-images.githubusercontent.com/68921168/129809388-c8c772e8-ddfa-4990-9c78-23f0d5b88cd3.png">
 
+    # **Push Code to the Heroku Remote**
 
+    We should send our project codebase to our `heroku` remote.
 
-   # **Push Code to the Heroku Remote**
+    This command will push our project's Git history to a remote named `heroku`. It will push the default `master` branch on our computer to Heroku's default `main` branch on our new Heroku virtual computer.
 
-   We should send our project codebase to our `heroku` remote.
+    ```
+    $ git push heroku master:main
 
-   This command will push our project's Git history to a remote named `heroku`. It will push the default `master` branch on our computer to Heroku's default `main` branch on our new Heroku virtual computer.
+    ```
 
-   ```
-   $ git push heroku master:main
+    Every time we want to push our Git history to our Heroku app, we will need to push to the `heroku` remote.
 
-   ```
+    # **Create a Database in Heroku**
 
-   Every time we want to push our Git history to our Heroku app, we will need to push to the `heroku` remote.
+    Now that we've created our Heroku app for the first time, we need to tell the app that we're interested in adding a Postgres database to our deployed Heroku app.
 
-   # **Create a Database in Heroku**
+    This command uses the Heroku CLI to add a Postgres database to the app.
 
-   Now that we've created our Heroku app for the first time, we need to tell the app that we're interested in adding a Postgres database to our deployed Heroku app.
+    ```
+    $ heroku addons:create heroku-postgresql:hobby-dev
 
-   This command uses the Heroku CLI to add a Postgres database to the app.
+    ```
 
-   ```
-   $ heroku addons:create heroku-postgresql:hobby-dev
+    ### **Verify in the Dashboard**
 
-   ```
+    We can verify that our Heroku app has added a Postgres database by checking the [Heroku dashboard](https://dashboard.heroku.com/)  .
 
-   ### **Verify in the Dashboard**
+    We can use the Heroku dashboard to view our Heroku app. In the "Overview" tab, in the "Installed add-ons" section, we should see "Heroku Postgres."
 
-   We can verify that our Heroku app has added a Postgres database by checking the [Heroku dashboard](https://dashboard.heroku.com/)  .
-
-   We can use the Heroku dashboard to view our Heroku app. In the "Overview" tab, in the "Installed add-ons" section, we should see "Heroku Postgres."
-
-   <img width="951" alt="Screen Shot 2021-08-17 at 3 34 34 PM" src="https://user-images.githubusercontent.com/68921168/129809490-0f5b21a1-d362-43bb-973a-e7471bbe5e9f.png">
+    <img width="951" alt="Screen Shot 2021-08-17 at 3 34 34 PM" src="https://user-images.githubusercontent.com/68921168/129809490-0f5b21a1-d362-43bb-973a-e7471bbe5e9f.png">
 
 
-   Alternatively, in the "Resources" tab, in the "Add-ons" section, we should see "Heroku Postgres."
+    Alternatively, in the "Resources" tab, in the "Add-ons" section, we should see "Heroku Postgres."
 
-   <img width="946" alt="Screen Shot 2021-08-17 at 3 35 00 PM" src="https://user-images.githubusercontent.com/68921168/129809523-1371ae88-c9c5-4adc-a17a-4ddbe7349b66.png">
+    <img width="946" alt="Screen Shot 2021-08-17 at 3 35 00 PM" src="https://user-images.githubusercontent.com/68921168/129809523-1371ae88-c9c5-4adc-a17a-4ddbe7349b66.png">
 
 
-   # **Set Environment Variables in Heroku**
+    # **Set Environment Variables in Heroku**
 
-   Our current app sets the `SQLALCHEMY_DATABASE_URI` environment variable using our `.env` file. Our Flask code accesses this environment variable with the code `os.environ.get("SQLALCHEMY_DATABASE_URI")`.
+    Our current app sets the `SQLALCHEMY_DATABASE_URI` environment variable using our `.env` file. Our Flask code accesses this environment variable with the code `os.environ.get("SQLALCHEMY_DATABASE_URI")`.
 
-   Instead of giving Heroku our `.env` file, we need to add our environment variables to Heroku using the Heroku dashboard.
+    Instead of giving Heroku our `.env` file, we need to add our environment variables to Heroku using the Heroku dashboard.
 
-   ### **Find the Database URL in Heroku**
+    ### **Find the Database URL in Heroku**
 
-   First, let's find the connection string that will connect to our Heroku database, instead of a local database.
+    First, let's find the connection string that will connect to our Heroku database, instead of a local database.
+ 
+    When we added the Postgres database add-on above, Heroku created this connection string.
 
-   When we added the Postgres database add-on above, Heroku created this connection string.
+    In the Heroku dashboard, in the "Settings" tab, there is a section titled "Config Vars."
+ 
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/71c40f36-c307-4b2a-9d57-12039277f804/Untitled.png)
 
-   In the Heroku dashboard, in the "Settings" tab, there is a section titled "Config Vars."
+    Once we locate this section, we should:
 
-   ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/71c40f36-c307-4b2a-9d57-12039277f804/Untitled.png)
+    1. Click "Reveal Config Vars"
+    2. Find the automatically generated variable named "DATABASE_URL"
+    3. Copy the value of this connection string
 
-   Once we locate this section, we should:
+    # **Setup and Initialize the Database in Heroku**
 
-   1. Click "Reveal Config Vars"
-   2. Find the automatically generated variable named "DATABASE_URL"
-   3. Copy the value of this connection string
+    Now that our Flask app is on Heroku and can connect to a database, we need to initialize the database in Heroku once.
 
-   # **Setup and Initialize the Database in Heroku**
+    We can run the following:
 
-   Now that our Flask app is on Heroku and can connect to a database, we need to initialize the database in Heroku once.
+    ```
+    $ heroku run flask db upgrade
+ 
+    ```
 
-   We can run the following:
+    This will migrate the empty database in our remote Postgres connection to the latest schema configuration we have generated from our models.
 
-   ```
-   $ heroku run flask db upgrade
+    # **Verify**
 
-   ```
+    Our Flask project is on a Heroku machine, running, and connected to an initialized database. Now is the time to verify whether our API is accessible by web!
 
-   This will migrate the empty database in our remote Postgres connection to the latest schema configuration we have generated from our models.
+    As a convenient shortcut, the Heroku CLI gives us this command to automatically open our Heroku app in the browser:
 
-   # **Verify**
+    ```
+    $ heroku open
 
-   Our Flask project is on a Heroku machine, running, and connected to an initialized database. Now is the time to verify whether our API is accessible by web!
+    ```
 
-   As a convenient shortcut, the Heroku CLI gives us this command to automatically open our Heroku app in the browser:
+    This command needs to be run inside of our project folder.
 
-   ```
-   $ heroku open
+    ### **Use Postman**
 
-   ```
+    We can use Postman to make and verify all sorts of HTTP requests to our API!
 
-   This command needs to be run inside of our project folder.
+    ### **Use Heroku Logs**
 
-   ### **Use Postman**
+    During local development on our own machines, when we ran `$ flask run`, the server's logs were output into our terminal. We could see the details about every HTTP request our server received and every HTTP response it returned. We could also see output for any errors.
 
-   We can use Postman to make and verify all sorts of HTTP requests to our API!
-
-   ### **Use Heroku Logs**
-
-   During local development on our own machines, when we ran `$ flask run`, the server's logs were output into our terminal. We could see the details about every HTTP request our server received and every HTTP response it returned. We could also see output for any errors.
-
-   We can access the server logs of our Heroku app from the Heroku dashboard by finding the "More" menu and selecting "View logs."
+    We can access the server logs of our Heroku app from the Heroku dashboard by finding the "More" menu and selecting "View logs."
