@@ -82,12 +82,12 @@ this app uses
    ```  
    and 
    
-   ```JSX $ flask db upgrade
+   ``` $ flask db upgrade
    ```
 
 10. RUN FLASK
 
-    ```JSX $ flask run ``` and ```jsx $ FLASK_ENV=development flask run ```
+    ```$ flask run ``` and ```$ FLASK_ENV=development flask run ```
     
    
 11. SETTING UP .ENV FILE 
