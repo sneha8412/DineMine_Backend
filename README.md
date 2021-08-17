@@ -268,12 +268,14 @@ this app uses
 
     We can use the Heroku dashboard to view our Heroku app. In the "Overview" tab, in the "Installed add-ons" section, we should see "Heroku Postgres."
 
-    <img width="951" alt="Screen Shot 2021-08-17 at 3 34 34 PM" src="https://user-images.githubusercontent.com/68921168/129809490-0f5b21a1-d362-43bb-973a-e7471bbe5e9f.png">
+    <img width="2045" alt="Screen Shot 2021-08-17 at 3 49 02 PM" src="https://user-images.githubusercontent.com/68921168/129810742-9512adc3-69f0-4c79-a311-3609a63f3b57.png">
+
 
 
     Alternatively, in the "Resources" tab, in the "Add-ons" section, we should see "Heroku Postgres."
 
-    <img width="946" alt="Screen Shot 2021-08-17 at 3 35 00 PM" src="https://user-images.githubusercontent.com/68921168/129809523-1371ae88-c9c5-4adc-a17a-4ddbe7349b66.png">
+    <img width="2065" alt="Screen Shot 2021-08-17 at 3 50 22 PM" src="https://user-images.githubusercontent.com/68921168/129810796-244cd9a6-8a57-45e0-aa79-26dc8987d5d7.png">
+
 
 
     # **Set Environment Variables in Heroku**
@@ -290,7 +292,8 @@ this app uses
 
     In the Heroku dashboard, in the "Settings" tab, there is a section titled "Config Vars."
  
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/71c40f36-c307-4b2a-9d57-12039277f804/Untitled.png)
+    <img width="2038" alt="Screen Shot 2021-08-17 at 3 51 00 PM" src="https://user-images.githubusercontent.com/68921168/129810881-bdad6c14-e493-42cb-ac44-d9b7a0ff5cff.png">
+
 
     Once we locate this section, we should:
 
