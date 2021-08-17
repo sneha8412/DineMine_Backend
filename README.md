@@ -196,8 +196,8 @@ this app uses
    $ heroku create
 
    ```
-
-   1. We can create our app with the name `your-app-name` using:
+   **OR**
+   2. We can create our app with the name `your-app-name` using:
 
    ```
    $ heroku create your-app-name
@@ -211,9 +211,10 @@ this app uses
    ### **Our New Heroku App**
 
    We have officially created a Heroku app that is accessible online! We can follow the link from the `heroku create` output.
+   
+   <img width="955" alt="Screen Shot 2021-08-17 at 3 32 43 PM" src="https://user-images.githubusercontent.com/68921168/129810302-5cea1c90-954b-4bd7-bd41-80f653d96591.png">
 
-   ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ebc0c97b-0da5-4559-aca8-5d615e7a42ad/Untitled.png)
-
+   
    ### **Verify the New Heroku Remote**
 
    Creating a Heroku app will add a new Git remote to our project! A Git remote is a destination to which we can `git push`!
@@ -235,7 +236,9 @@ this app uses
 
    Visit the Heroku dashboard and see your new app listed! We'll visit this dashboard whenever we need details about our Heroku app.
 
-   ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7cff8f3e-3146-4e5f-a36c-11d1e289b360/Untitled.png)
+   <img width="961" alt="Screen Shot 2021-08-17 at 3 33 24 PM" src="https://user-images.githubusercontent.com/68921168/129809388-c8c772e8-ddfa-4990-9c78-23f0d5b88cd3.png">
+
+
 
    # **Push Code to the Heroku Remote**
 
@@ -267,11 +270,13 @@ this app uses
 
    We can use the Heroku dashboard to view our Heroku app. In the "Overview" tab, in the "Installed add-ons" section, we should see "Heroku Postgres."
 
-   ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/19acc83d-070a-4d35-9be4-34644d139415/Untitled.png)
+   <img width="951" alt="Screen Shot 2021-08-17 at 3 34 34 PM" src="https://user-images.githubusercontent.com/68921168/129809490-0f5b21a1-d362-43bb-973a-e7471bbe5e9f.png">
+
 
    Alternatively, in the "Resources" tab, in the "Add-ons" section, we should see "Heroku Postgres."
 
-   ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/669eb422-b1c6-4517-938a-f3766142f5d1/Untitled.png)
+   <img width="946" alt="Screen Shot 2021-08-17 at 3 35 00 PM" src="https://user-images.githubusercontent.com/68921168/129809523-1371ae88-c9c5-4adc-a17a-4ddbe7349b66.png">
+
 
    # **Set Environment Variables in Heroku**
 
