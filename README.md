@@ -28,10 +28,12 @@ this app uses
    ```
    
 2. INSTALL FLASK
-  ```JSX
+   
+   ```JSX
    pip install flask
    ```
    Inside the Terminal enter your project root folder and run the following commands
+   
 3. ACTIVATE VIRTUAL ENVIRONMENT
    ```JSX
     $ python3 -m venv venv
@@ -41,42 +43,46 @@ this app uses
     (venv) $ # You're in activated virtual environment!
    ```
 4. DOWNLOAD REQUIREMENTS
-    ```JSX
+   
+   ```JSX
    (venv) $ pip install -r requirements.txt
    ```
 
 5. INSTALL FLASK-CORS
 
-  ```JSX
+   ```JSX
    pip install flask-cors
    ```
    
 6. INSTALL SQLALCHEMY
 
-  ```JSX
+   ```JSX
    pip install sqlalchemy
    ```
 7. IN THE POSTGRES -U PSQL
-
-  ```JSX
+ 
+   ```JSX
    git clone 'CLONED REPO CODE'
    ```
 8. Setting up development databases
   
-    ```JSX
+   ```JSX
    git clone 'CLONED REPO CODE'
    ```
 9. Run flask db init.
+   
    ```jsx $ flask db init``` 
+   
    After you make your first model, run the other commands 
+   
    ```jsx  $ flask db migrate``` and ```jsx $ flask db upgrade```
 
-11. RUN FLASK
+10. RUN FLASK
 
-```JSX $ flask run ``` and ```jsx $ FLASK_ENV=development flask run ```
+    ```JSX $ flask run ``` and ```jsx $ FLASK_ENV=development flask run ```
     
    
-10. SETTING UP .ENV FILE 
+11. SETTING UP .ENV FILE 
     
     Create a file named .env.
 
@@ -85,7 +91,9 @@ this app uses
     SQLALCHEMY_DATABASE_URI to hold the path to your development database
     [OPTIONAL] SQLALCHEMY_TEST_DATABASE_URI to hold the path to your development database
     Your .env may look like this:
-
+    
+    ```jsx
     SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://postgres:postgres@localhost:5432/dinemine_backend_api_development
     SQLALCHEMY_TEST_DATABASE_URI=postgresql+psycopg2://postgres:postgres@localhost:5432/dinemine_backend_api_test
+    ```
     
