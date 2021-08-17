@@ -78,7 +78,7 @@ this app uses
    After you make your first model, run the other commands 
    
    ```JSX 
-   flask db migrate
+   $ flask db migrate
    ```  
    and 
    
