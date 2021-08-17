@@ -82,7 +82,8 @@ this app uses
    ```  
    and 
    
-   ``` $ flask db upgrade
+   ```JSX
+   $ flask db upgrade
    ```
 
 10. RUN FLASK
