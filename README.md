@@ -13,7 +13,7 @@ DineMine_Backend supports the CRUD routes for the Web-app
 <img width="1301" alt="Screen Shot 2021-08-17 at 2 53 49 PM" src="https://user-images.githubusercontent.com/68921168/129805705-3225a915-da4a-45b9-ba86-f7be132acbea.png">
 
 ### DEPENDENCIES
-this app uses
+
 1. Flask
 2. Flask SQlAlchemy
 3. Postgress db
