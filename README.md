@@ -71,11 +71,19 @@ this app uses
    ```
 9. Run flask db init.
    
-   ```jsx $ flask db init``` 
+   ```JSX 
+   flask db init
+   ``` 
    
    After you make your first model, run the other commands 
    
-   ```jsx  $ flask db migrate``` and ```jsx $ flask db upgrade```
+   ```JSX 
+   flask db migrate
+   ```  
+   and 
+   
+   ```JSX $ flask db upgrade
+   ```
 
 10. RUN FLASK
 
@@ -92,7 +100,7 @@ this app uses
     [OPTIONAL] SQLALCHEMY_TEST_DATABASE_URI to hold the path to your development database
     Your .env may look like this:
     
-    ```jsx
+    ```JSX
     SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://postgres:postgres@localhost:5432/dinemine_backend_api_development
     SQLALCHEMY_TEST_DATABASE_URI=postgresql+psycopg2://postgres:postgres@localhost:5432/dinemine_backend_api_test
     ```
