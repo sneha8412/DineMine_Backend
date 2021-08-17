@@ -48,7 +48,7 @@ def create_an_experience(host_id):
     return jsonify({ "experience_id": new_experience.exp_id, "Success": f"Experience {new_experience.exp_title} is created"}), 201
 
 #----------------------------------------------------------------------------------------------------------------------------
-#get experience by location
+#get experience by location/CUISINE/DINETIME/SORT BY PRICE
 @experience_bp.route("", methods=["GET"], strict_slashes=False)
 def get_all_experiences():
     
